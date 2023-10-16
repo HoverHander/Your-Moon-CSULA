@@ -8,6 +8,7 @@ import { ref, reactive } from "vue";
 import MoonRegistration from "../moon-registration";
 import config from "../../config/config.json";
 import { nearestCity } from 'cityjs';
+import ExifBeGone from 'exif-be-gone';
 
 // This is the ref to the cropper DOM element
 const cropr = ref(null);
@@ -355,6 +356,7 @@ async function uploadCroppedImage() {
     if (meta_res.status == 200) {
       const imgFile = await new Promise(resolve => {
         cropr.value.getCroppedCanvas().toBlob(img => {
+          const cleanedFile = await removeExifData(imgFile);
           resolve(img);
         });
       });
@@ -375,6 +377,19 @@ async function uploadCroppedImage() {
   } catch (err) {
     data.message = err;
   }
+}
+
+// function that deletes metadata from the image
+async function removeExifData(imageFile) {
+  return new Promise((resolve, reject) => {
+    ExifBeGone(imageFile, (error, cleanedFile) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(cleanedFile)
+      }
+    });
+  });
 }
 </script>
 
