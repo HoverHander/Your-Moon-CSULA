@@ -4,7 +4,7 @@ import uploadPage from "../views/uploadPage.vue";
 import landingPage from "../views/landingPage.vue";
 
 import axios from 'axios';
-import config from "../../config/config.json";
+import config from "../../config/config.json.template";
 const routes = [
     {path: '/upload', name: 'Upload', component: uploadPage, meta:{requiresAuth:true}},
     {path: '/', name: 'LandingPage', component: landingPage}

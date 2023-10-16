@@ -6,7 +6,7 @@ import axios from "axios";
 import ExifReader from "exifreader";
 import { ref, reactive } from "vue";
 import MoonRegistration from "../moon-registration";
-import config from "../../config/config.json";
+import config from "../../config/config.json.template";
 import { nearestCity } from 'cityjs';
 import ExifBeGone from 'exif-be-gone';
 
@@ -355,9 +355,9 @@ async function uploadCroppedImage() {
 
     if (meta_res.status == 200) {
       const imgFile = await new Promise(resolve => {
-        cropr.value.getCroppedCanvas().toBlob(img => {
+        cropr.value.getCroppedCanvas().toBlob(async imgFile => {
           const cleanedFile = await removeExifData(imgFile);
-          resolve(img);
+          resolve(cleanedFile);
         });
       });
       const formData = new FormData();
