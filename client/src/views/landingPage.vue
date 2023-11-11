@@ -1,6 +1,6 @@
 
 <script setup>
-import config from "../../config/config.json";
+import config from "../../config/config.json.template";
 let data = {
     imageSrc: "src/assets/YourMoon.png"
 }
